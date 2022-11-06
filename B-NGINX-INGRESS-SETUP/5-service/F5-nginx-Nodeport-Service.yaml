@@ -1,0 +1,28 @@
+# This is for F5-Nginx integration (ingress no longer external LB)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress
+  namespace: nginx-ingress
+  labels:
+    app: ingresslink
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30301
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 8081
+    nodePort: 30302
+    targetPort: 8081
+    protocol: TCP
+    name: health
+  - port: 443
+    nodePort: 30303
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    app: nginx-ingress
